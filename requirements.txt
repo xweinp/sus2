@@ -1,4 +1,5 @@
 torch
 gym
+gymnasium[classic_control]
 
 # TODO: add versions
