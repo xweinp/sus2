@@ -1,2 +1,4 @@
 torch
 gymnasium[classic_control]
+argparse
+numpy

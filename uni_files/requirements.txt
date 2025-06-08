@@ -1,2 +1,0 @@
-gymnasium[classic_control] >= 0.29.1
-numpy >= 1.23

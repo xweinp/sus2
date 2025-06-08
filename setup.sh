@@ -12,11 +12,11 @@ pip install -r requirements.txt
 # source pysus/bin/activate
 
 echo "Evaluating best agent..."
-python3 evaluate.py
+python3 evaluate.py -f best_agent.pt
 
 echo "Setup complete. Run the training script."
 python3 train_agent.py
 
 echo "Evaluating the agent we have just trained..."
-python3 evaluate.py
+python3 evaluate.py -f agent.pt
 

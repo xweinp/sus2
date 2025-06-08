@@ -2,7 +2,7 @@ import torch
 from torch import nn
 import gymnasium
 from utils import *
-
+import argparse
 
 def process_batch(
     batch, 
@@ -55,7 +55,8 @@ def train(
     gamma = 0.99,
     update_target_steps = 100,
     quality_check_freq = 25,
-    hidden_dim = 32
+    hidden_dim = 32,
+    file = "agent.pt"
 ):
     dtype = torch.float32
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -162,8 +163,32 @@ def train(
             sm = 0
     
     env.close()
-    torch.save(target_model, 'agent.pt')
-    print("Training complete. Model saved to 'agent.pt'.")
+    torch.save(target_model, file)
+    print(f"Training complete. Model saved to {file}.")
 
 if __name__ == "__main__":
-    train()
+    parser = argparse.ArgumentParser(description="Train a PyTorch model for CartPole-v1")
+    parser.add_argument("-b", "--batch_size", type=int, default=128, help="Batch size for training")
+    parser.add_argument("-l", "--learning_rate", type=float, default=0.001, help="Learning rate for the optimizer")
+    parser.add_argument("-n", "--n_episodes", type=int, default=300, help="Number of episodes to train")
+    parser.add_argument("-e", "--eps_greedy", type=float, default=0.1, help="Epsilon for epsilon-greedy policy")
+    parser.add_argument("-d", "--eps_decay", type=float, default=0.95, help="Decay factor for epsilon")
+    parser.add_argument("-g", "--gamma", type=float, default=0.99, help="Discount factor for future rewards")
+    parser.add_argument("-u", "--update_target_steps", type=int, default=100, help="Steps to update target model")
+    parser.add_argument("-q", "--quality_check_freq", type=int, default=25, help="Frequency of quality checks")
+    parser.add_argument("-hd", "--hidden_dim", type=int, default=32, help="Hidden dimension size for the model")
+    parser.add_argument("-f", "--file", type=str, default="agent.pt", help="File to save the trained model")
+    
+    args = parser.parse_args()
+    
+    train(
+        batch_size=args.batch_size,
+        learning_rate=args.learning_rate,
+        n_episodes=args.n_episodes,
+        eps_greedy=args.eps_greedy,
+        eps_decay=args.eps_decay,
+        gamma=args.gamma,
+        update_target_steps=args.update_target_steps,
+        quality_check_freq=args.quality_check_freq,
+        hidden_dim=args.hidden_dim
+    )
