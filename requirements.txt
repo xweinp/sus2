@@ -1,4 +1,4 @@
-torch
-gymnasium[classic_control]
+torch>=2.1
+gymnasium[classic-control]>=0.29.1
+numpy>=1.23
 argparse
-numpy

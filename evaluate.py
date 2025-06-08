@@ -47,5 +47,5 @@ if __name__ == "__main__":
     print(f"Using device: {device}")
 
     print(f"Evaluating {file_path} pytorch model:")
-    model = torch.load(file_path, weights_only=False).to(device)
+    model = torch.load(file_path, weights_only=False, map_location=device)
     evaluate(model, device)
